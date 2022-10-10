@@ -39,6 +39,17 @@ export class App extends Component {
     }));
   };
 
+  componentDidMount() {
+    const lsContacts = localStorage.getItem('contacts');
+    if (lsContacts) {
+      this.setState({ contacts: JSON.parse(lsContacts) });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
+
   render() {
     const visibleContacts = this.state.contacts.filter(contact =>
       contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
